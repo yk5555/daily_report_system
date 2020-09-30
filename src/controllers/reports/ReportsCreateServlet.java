@@ -2,7 +2,10 @@ package controllers.reports;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -55,9 +58,29 @@ public class ReportsCreateServlet extends HttpServlet {
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
 
+
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             r.setCreated_at(currentTime);
             r.setUpdated_at(currentTime);
+
+            SimpleDateFormat sdf  = new SimpleDateFormat("hh:mm");
+            java.util.Date date;
+            try {
+                date = sdf.parse((String)request.getParameter("attendance_time"));
+                r.setAttendance_time(new Time(date.getTime()));
+            } catch (ParseException e) {
+                // TODO 自動生成された catch ブロック
+                e.printStackTrace();
+            }
+
+            try {
+                date = sdf.parse((String)request.getParameter("departure_time"));
+                r.setDeparture_time(new Time(date.getTime()));
+            } catch (ParseException e) {
+                // TODO 自動生成された catch ブロック
+                e.printStackTrace();
+            }
+
 
             List<String> errors = ReportValidator.validate(r);
             if(errors.size() > 0) {

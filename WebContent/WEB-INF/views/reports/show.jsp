@@ -17,6 +17,12 @@
                             <th>日付</th>
                             <td><fmt:formatDate value="${report.report_date}" pattern="yyyy-MM-dd" /></td>
                         </tr>
+                          <tr>
+                            <th>タイトル</th>
+                            <td>
+                                <pre><c:out value="${report.title}" /></pre>
+                            </td>
+                            </tr>
                         <tr>
                             <th>内容</th>
                             <td>
@@ -35,9 +41,20 @@
                                 <fmt:formatDate value="${report.updated_at}" pattern="yyyy-MM-dd HH:mm:ss" />
                             </td>
                         </tr>
+                        <tr>
+                        <th>出勤時刻</th>
+                            <td>
+                                 <fmt:formatDate value="${report.attendance_time}" pattern="HH:mm" />
+                            </td>
+                        </tr>
+                        <tr>
+                         <th>退勤時刻</th>
+                            <td>
+                                 <fmt:formatDate value="${report.departure_time}" pattern="HH:mm" />
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
-
                 <c:if test="${sessionScope.login_employee.id == report.employee.id}">
                     <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
                 </c:if>
